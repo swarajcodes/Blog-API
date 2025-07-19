@@ -14,6 +14,11 @@ import config from '@/config';
 import limiter from '@/lib/express_rate_limit';
 
 /**
+ * Router
+ */
+import v1Routes from '@/routes/v1';
+
+/**
  * Types
  */
 import type { CorsOptions } from 'cors';
@@ -71,13 +76,10 @@ app.use(helmet());
 //Apply rate limiting middleware to prevent excessive requests and enhance security
 app.use(limiter);
 
+//IIFE(immediately invoked async function expression)
 (async () => {
   try {
-    app.get('/', (req, res) => {
-      res.json({
-        message: 'Welcome to my Blog API',
-      });
-    });
+    app.use('/api/v1', v1Routes);
 
     app.listen(config.PORT, () => {
       console.log(`Server running: http://localhost:${config.PORT}`);
