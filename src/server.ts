@@ -92,3 +92,15 @@ app.use(limiter);
     }
   }
 })();
+
+const handleServerShutdown = async () => {
+  try {
+    console.log('Server Shutdown');
+    process.exit(0);
+  } catch (err) {
+    console.log('Error during server shutdown', err);
+  }
+};
+
+process.on('SIGTERM', handleServerShutdown);
+process.on('SIGINT', handleServerShutdown);
