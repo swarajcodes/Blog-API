@@ -3,11 +3,15 @@
  */
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import helmet from 'helmet';
 
 /**
  * Custom Modules
  */
 import config from '@/config';
+import limiter from '@/lib/express_rate_limit';
 
 /**
  * Types
@@ -52,12 +56,37 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to my Blog API',
-  });
-});
+app.use(cookieParser());
 
-app.listen(config.PORT, () => {
-  console.log(`Server running: http://localhost:${config.PORT}`);
-});
+//enable response compression to reduce payload size and improve performance
+app.use(
+  compression({
+    threshold: 1024, //only compress response larger than 1KB
+  }),
+);
+
+//use helmet to enhance security by setting various headers
+app.use(helmet());
+
+//Apply rate limiting middleware to prevent excessive requests and enhance security
+app.use(limiter);
+
+(async () => {
+  try {
+    app.get('/', (req, res) => {
+      res.json({
+        message: 'Welcome to my Blog API',
+      });
+    });
+
+    app.listen(config.PORT, () => {
+      console.log(`Server running: http://localhost:${config.PORT}`);
+    });
+  } catch (err) {
+    console.log(`Failed to start the server`, err);
+
+    if (config.NODE_ENV === 'production') {
+      process.exit(1);
+    }
+  }
+})();
