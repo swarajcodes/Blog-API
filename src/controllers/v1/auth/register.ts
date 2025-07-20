@@ -10,6 +10,7 @@ import { generateAccessToken, generateRefreshToken } from '@/lib/jwt';
  * Models
  */
 import User from '@/models/user';
+import Token from '@/models/token';
 
 /**
  * Types
@@ -35,7 +36,13 @@ const register = async (req: Request, res: Response): Promise<void> => {
     //generate access token and refresh token for new user
     const accessToken = generateAccessToken(newUser._id);
     const refreshToken = generateRefreshToken(newUser._id);
-    
+
+    //store refresh token in db
+    await Token.create({ token: refreshToken, userId: newUser._id });
+    logger.info('Refresh Token created for user', {
+      userId: newUser._id,
+      token: refreshToken,
+    });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
