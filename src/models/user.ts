@@ -2,6 +2,7 @@
  * Node modules
  */
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 export interface IUser {
   username: string;
@@ -80,5 +81,16 @@ const userSchema = new Schema<IUser>(
     timestamps: true,
   },
 );
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+    return;
+  }
+
+  //hashing the password
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
 export default model<IUser>('User', userSchema);
