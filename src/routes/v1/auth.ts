@@ -6,11 +6,9 @@ import { Router } from 'express';
  * Controllers
  */
 import register from '@/controllers/v1/auth/register';
-import {
-  loginValidator,
-  refreshTokenValidator,
-  registerValidator,
-} from '@/validators/user.validator';
+import { registerValidator } from '@/validators/auth/registerValidator';
+import { loginValidator } from '@/validators/auth/loginValidator';
+import { refreshTokenValidator } from '@/validators/auth/refreshTokenValidator';
 import { validationError } from '@/middlewares/validationError';
 import login from '@/controllers/v1/auth/login';
 import refreshToken from '@/controllers/v1/auth/refresh-token';
