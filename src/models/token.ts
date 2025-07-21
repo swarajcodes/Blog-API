@@ -19,4 +19,5 @@ const tokenSchema = new Schema<IToken>({
   },
 });
 
-export default model<IToken>('Token', tokenSchema);
+const Token = model<IToken>('Token', tokenSchema);
+export default Token;
