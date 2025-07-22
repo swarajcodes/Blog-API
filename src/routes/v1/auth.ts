@@ -9,13 +9,16 @@ import register from '@/controllers/v1/auth/register';
 import { registerValidator } from '@/validators/auth/registerValidator';
 import { loginValidator } from '@/validators/auth/loginValidator';
 import { refreshTokenValidator } from '@/validators/auth/refreshTokenValidator';
-import { validationError } from '@/middlewares/validationError';
+
 import login from '@/controllers/v1/auth/login';
 import refreshToken from '@/controllers/v1/auth/refresh-token';
 
 /**
  * Middlewares
  */
+import { validationError } from '@/middlewares/validationError';
+import logout from '@/controllers/v1/auth/logout';
+import authenticate from '@/middlewares/authenticate';
 
 /**
  * Models
@@ -33,5 +36,7 @@ router.post(
   validationError,
   refreshToken,
 );
+
+router.post('/logout',authenticate,logout)
 
 export default router;
