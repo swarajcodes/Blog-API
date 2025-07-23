@@ -24,6 +24,8 @@ import { updateValidator } from '@/validators/user/updateValidator';
 import deleteCurrentUser from '@/controllers/v1/user/delete_current_user';
 import getAllUser from '@/controllers/v1/user/get_all_user';
 import { getAllUserValidator } from '@/validators/user/getAllUserValidator';
+import { getUserByIdValidator } from '@/validators/user/getUserByIdValidator';
+import getUser from '@/controllers/v1/user/get_user';
 
 const router = Router();
 
@@ -57,6 +59,15 @@ router.get(
   getAllUserValidator,
   validationError,
   getAllUser,
+);
+
+router.get(
+  '/:userId',
+  authenticate,
+  authorize(['admin']),
+  getUserByIdValidator,
+  validationError,
+  getUser,
 );
 
 export default router;
