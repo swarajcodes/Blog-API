@@ -6,7 +6,7 @@ dotenv.config({
 /**
  * Types
  */
-import type ms from 'ms'
+import type ms from 'ms';
 const config = {
   PORT: process.env.PORT || 3000,
   NODE_ENV: process.env.NODE_ENV,
@@ -18,9 +18,9 @@ const config = {
   ACCESS_TOKEN_EXPIRY: process.env.ACCESS_TOKEN_EXPIRY as ms.StringValue,
   REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY as ms.StringValue,
 
-  WHITELIST_ADMINS_MAIL:[
-    'swaraj081@gmail.com'
-  ]
+  WHITELIST_ADMINS_MAIL: ['swaraj081@gmail.com'],
+  defaultResLimit: 20,
+  defaultResOffset: 0,
 };
 
 export default config;
