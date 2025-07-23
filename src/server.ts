@@ -25,7 +25,6 @@ import v1Routes from '@/routes/v1';
  */
 import type { CorsOptions } from 'cors';
 
-
 /**
  * Setting up my Express Server
  */

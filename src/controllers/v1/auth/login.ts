@@ -65,10 +65,10 @@ const login = async (req: Request, res: Response): Promise<void> => {
     logger.info('User Logged in succesfully', user);
   } catch (err) {
     res.status(500).json({
-        code:'ServerError',
-        message:'Internal Server error',
-        error:err
-    })
+      code: 'ServerError',
+      message: 'Internal Server error',
+      error: err,
+    });
 
     logger.error('Error during Login', err);
   }

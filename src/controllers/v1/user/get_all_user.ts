@@ -36,8 +36,6 @@ const getAllUser = async (req: Request, res: Response): Promise<void> => {
       total,
       users,
     });
-
-    
   } catch (err) {
     res.status(500).json({
       code: 'ServerError',

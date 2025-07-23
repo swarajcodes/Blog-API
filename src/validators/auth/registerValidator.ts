@@ -1,7 +1,6 @@
 import { body, cookie } from 'express-validator';
 import User from '@/models/user';
 
-
 export const registerValidator = [
   body('email')
     .trim()

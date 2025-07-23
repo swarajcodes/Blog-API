@@ -37,6 +37,6 @@ router.post(
   refreshToken,
 );
 
-router.post('/logout',authenticate,logout)
+router.post('/logout', authenticate, logout);
 
 export default router;
