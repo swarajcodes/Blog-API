@@ -21,6 +21,7 @@ import updateCurrentUser from '@/controllers/v1/user/update_current_user';
  */
 import User from '@/models/user';
 import { updateValidator } from '@/validators/user/updateValidator';
+import deleteCurrentUser from '@/controllers/v1/user/delete_current_user';
 
 const router = Router();
 
@@ -38,6 +39,13 @@ router.put(
   updateValidator,
   validationError,
   updateCurrentUser,
+);
+
+router.delete(
+  '/current',
+  authenticate,
+  authorize(['admin', 'user']),
+  deleteCurrentUser,
 );
 
 export default router;
