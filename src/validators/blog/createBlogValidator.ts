@@ -1,7 +1,7 @@
 import { body } from 'express-validator';
 
 export const createBlogValidator = [
-  body('banner_image').notEmpty().withMessage('Banner image is required'),
+//   body('banner_image').notEmpty().withMessage('Banner image is required'),
   body('title')
     .trim()
     .notEmpty()

@@ -1,5 +1,6 @@
 import createBlog from '@/controllers/v1/blog/create_blog';
 import getAllBlogs from '@/controllers/v1/blog/get_all_blogs';
+import getBlogsBySlug from '@/controllers/v1/blog/get_blogs_by_slug';
 import getBlogsByUser from '@/controllers/v1/blog/get_blogs_by_user';
 import authenticate from '@/middlewares/authenticate';
 import authorize from '@/middlewares/authorize';
@@ -8,6 +9,7 @@ import { validationError } from '@/middlewares/validationError';
 import { createBlogValidator } from '@/validators/blog/createBlogValidator';
 import { getAllBlogValidator } from '@/validators/blog/getAllBlogsValidator';
 import { getBlogByUserValidator } from '@/validators/blog/getBlogByUserValidator';
+import { getBlogBySlugValidator } from '@/validators/blog/getBlogsBySlugValidator';
 import { Router } from 'express';
 import multer from 'multer';
 
@@ -42,6 +44,15 @@ router.get(
   getBlogByUserValidator,
   validationError,
   getBlogsByUser,
+);
+
+router.get(
+  '/:slug',
+  authenticate,
+  authorize(['admin', 'user']),
+  getBlogBySlugValidator,
+  validationError,
+  getBlogsBySlug,
 );
 
 export default router;
