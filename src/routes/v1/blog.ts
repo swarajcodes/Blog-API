@@ -13,6 +13,10 @@ import { getBlogBySlugValidator } from '@/validators/blog/getBlogsBySlugValidato
 import { Router } from 'express';
 import multer from 'multer';
 
+import { param, body } from 'express-validator';
+import updateBlog from '@/controllers/v1/blog/update_blog';
+import { updateBlogValidator } from '@/validators/blog/updateBlogValidator';
+
 const upload = multer();
 
 const router = Router();
@@ -53,6 +57,16 @@ router.get(
   getBlogBySlugValidator,
   validationError,
   getBlogsBySlug,
+);
+
+router.put(
+  '/:blogId',
+  authenticate,
+  authorize(['admin']),
+  updateBlogValidator,
+  validationError,
+  uploadBlogBanner('put'),
+  updateBlog,
 );
 
 export default router;
