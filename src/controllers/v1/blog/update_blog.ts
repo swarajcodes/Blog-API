@@ -58,6 +58,7 @@ const updateBlog = async (req: Request, res: Response): Promise<void> => {
         userId,
         blog,
       });
+      return;
     }
 
     if (title) blog.title = title;

@@ -16,6 +16,7 @@ import multer from 'multer';
 import { param, body } from 'express-validator';
 import updateBlog from '@/controllers/v1/blog/update_blog';
 import { updateBlogValidator } from '@/validators/blog/updateBlogValidator';
+import deleteBlog from '@/controllers/v1/blog/delete_blog';
 
 const upload = multer();
 
@@ -67,6 +68,15 @@ router.put(
   validationError,
   uploadBlogBanner('put'),
   updateBlog,
+);
+
+router.delete(
+  '/:blogId',
+  authenticate,
+  param('blogId').isMongoId().withMessage('Invalid Blog Id'),
+  validationError,
+  authorize(['admin']),
+  deleteBlog,
 );
 
 export default router;
