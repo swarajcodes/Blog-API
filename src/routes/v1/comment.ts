@@ -1,4 +1,5 @@
 import commentBlog from '@/controllers/v1/comment/comment_blog';
+import getCommentsByBlog from '@/controllers/v1/comment/get_comments_by_blog';
 import authenticate from '@/middlewares/authenticate';
 import authorize from '@/middlewares/authorize';
 import { validationError } from '@/middlewares/validationError';
@@ -15,6 +16,15 @@ router.post(
   body('content').trim().notEmpty().withMessage('Content is required'),
   validationError,
   commentBlog,
+);
+
+router.get(
+  '/blog/:blogId',
+  authenticate,
+  authorize(['admin', 'user']),
+  param('blogId').isMongoId().withMessage('Invalid Blog Id'),
+  validationError,
+  getCommentsByBlog,
 );
 
 export default router;
